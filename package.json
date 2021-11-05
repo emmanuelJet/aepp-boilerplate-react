@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "license": "ISC",
+	"author": "aeternity developers (https://aeternity.com)",
+	"repository": "github:emmanueljet/aepp-boilerplate-react",
+	"homepage": "https://emmanueljet.github.io/aepp-boilerplate-react",
   "description": "A ReactJS boilerplate to build æpps in the æternity ecosystem.",
   "keywords": [
     "aeternity",

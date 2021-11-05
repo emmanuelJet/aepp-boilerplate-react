@@ -1,8 +1,8 @@
-
 # æpp boilerplate ReactJS frontend
 
-This boilerplate allows everyone to easy start when building an æpp with ReactJS on top of the æternity ecosystem. It will contain two critical parts:
+This boilerplate allows everyone to easy start when building an æpp with ReactJS on top of the æternity ecosystem. It contains three critical parts:
 
+- A custom build action
 - The aepp-sdk-js
 - Easy wallet discovery
 

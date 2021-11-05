@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "license": "ISC",
-	"description": "A ReactJS boilerplate to build æpps in the æternity ecosystem.",
-	"keywords": [
+  "description": "A ReactJS boilerplate to build æpps in the æternity ecosystem.",
+  "keywords": [
     "aeternity",
-		"aeternity-blockchain",
+    "aeternity-blockchain",
     "aeternity-boilerplate",
     "aepp-boilerplate-react"
   ],
   "dependencies": {
+    "@aeternity/aepp-sdk": "^9.0.1",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",

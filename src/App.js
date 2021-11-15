@@ -1,6 +1,12 @@
-import { useState, useEffect } from 'react';
+import {
+	useState,
+	useEffect
+} from 'react';
 import { connect } from "react-redux";
-import { toAe, AE_AMOUNT_FORMATS } from '@aeternity/aepp-sdk/es/utils/amount-formatter';
+import {
+	toAe,
+	AE_AMOUNT_FORMATS
+} from '@aeternity/aepp-sdk/es/utils/amount-formatter';
 
 import './App.css';
 import logo from './logo.svg';
@@ -17,17 +23,17 @@ const App = ({ dispatch }) => {
 	useEffect(() => {
     try {
 			(async () => {
-				let sdkResponse = await aeternitySDK();
+				const sdkResponse = await aeternitySDK();
 
 				dispatch(addSDK(sdkResponse.client));
-				dispatch(addAddress(sdkResponse.scannedAddress));
-				console.log("Current Address", sdkResponse.scannedAddress);
+				dispatch(addAddress(sdkResponse.address));
+				console.log("Current Address:", sdkResponse.address);
 
-				sdkResponse.client.balance(sdkResponse.scannedAddress).then((value) => {
+				sdkResponse.client.balance(sdkResponse.address).then((value) => {
 					let addressBalance = toAe(value) + ' ' + AE_AMOUNT_FORMATS.AE;
 
 					dispatch(addAddressBalance(addressBalance));
-					console.log("Current Balance", addressBalance);
+					console.log("Current Balance:", addressBalance);
 				}).catch(() => '0 ' + AE_AMOUNT_FORMATS.AE);
 
 				clientReady(true);		
@@ -39,20 +45,16 @@ const App = ({ dispatch }) => {
 		}
   }, [dispatch]);
 
-	let displayMessage = () => {
-		if (client) {
-			return `See console for the connected account details`
-		} else {
-			return `Account not connected`
-		}
-	}
-
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-					{displayMessage()}
+					{
+						client
+						? "See console for the connected account details"
+						: "Account not connected"
+					}
         </p>
         <a
           className="App-link"
@@ -65,8 +67,8 @@ const App = ({ dispatch }) => {
       </header>
     </div>
   );
-}
+};
 
 const mapStateToProps = (state) => ({ state });
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps)(App);

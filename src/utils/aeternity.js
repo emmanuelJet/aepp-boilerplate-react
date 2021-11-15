@@ -2,14 +2,13 @@ import {
 	Node,
 	RpcAepp
 } from "@aeternity/aepp-sdk/es";
-import { toAe, AE_AMOUNT_FORMATS } from '@aeternity/aepp-sdk/es/utils/amount-formatter';
 import WalletDetector from "@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-detector";
 import BrowserWindowMessageConnection from "@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message";
 
 import store from "../store";
 import nodeConfig from "../configs/node";
 
-let client;
+let client, address;
 
 const scanForWallets = () => {
 	if (!client) throw new Error("Use aeternitySDK first");
@@ -26,18 +25,18 @@ const scanForWallets = () => {
 				await client.connectToWallet(await newWallet.getConnection())
 				await client.subscribeAddress("subscribe", "current")
 
-				let address = client.address();
-				if (!address) return;
+				let scannedAddress = client.address();
+				if (!scannedAddress) return;
 
 				detector.stopScan()
-				resolve(address);
+				resolve(scannedAddress);
 			}
     });
   });
 };
 
 
-export const aeternitySDK = async (state) => {
+export const aeternitySDK = async () => {
   try {
     const node = {
       nodes: [
@@ -58,39 +57,22 @@ export const aeternitySDK = async (state) => {
       ],
       compilerUrl: nodeConfig.compilerUrl,
     };
-		state = store.getState();
 
     client = await RpcAepp({
       name: "aepp-boilerplate",
 			...node,
 			onNetworkChange: async (params) => {
 				client.selectNode(params.networkId);
-
-				state.sdk = client;
-				state.address = await client.address();
-				client.balance(state.address).then((value) => {
-					let stateBalance = toAe(value) + ' ' + AE_AMOUNT_FORMATS.AE;
-
-					state.balance = stateBalance;
-				}).catch(() => '0 ' + AE_AMOUNT_FORMATS.AE);
-			},
-			onAddressChange:  async (addresses) => {
-				state.sdk = client;
-				state.address = await client.address();
-				client.balance(state.address).then((value) => {
-					let stateBalance = toAe(value) + ' ' + AE_AMOUNT_FORMATS.AE;
-
-					state.balance = stateBalance;
-				}).catch(() => '0 ' + AE_AMOUNT_FORMATS.AE);
+				client.balance(address);
 			},
       onDisconnect() {
         store.dispatch('resetState');
-      },
+      }
     });
     
-		let scannedAddress = await scanForWallets();
+		address = await scanForWallets();
 
-    return { client, scannedAddress };
+    return { client, address };
   } catch (err) {
     console.error(err);
     return;

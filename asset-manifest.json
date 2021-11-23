@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/aepp-boilerplate-react/static/css/main.036025c0.chunk.css",
-    "main.js": "/aepp-boilerplate-react/static/js/main.f0314619.chunk.js",
-    "main.js.map": "/aepp-boilerplate-react/static/js/main.f0314619.chunk.js.map",
-    "runtime-main.js": "/aepp-boilerplate-react/static/js/runtime-main.4ba6c0cb.js",
-    "runtime-main.js.map": "/aepp-boilerplate-react/static/js/runtime-main.4ba6c0cb.js.map",
-    "static/js/2.349512e1.chunk.js": "/aepp-boilerplate-react/static/js/2.349512e1.chunk.js",
-    "static/js/2.349512e1.chunk.js.map": "/aepp-boilerplate-react/static/js/2.349512e1.chunk.js.map",
-    "static/js/3.21874532.chunk.js": "/aepp-boilerplate-react/static/js/3.21874532.chunk.js",
-    "static/js/3.21874532.chunk.js.map": "/aepp-boilerplate-react/static/js/3.21874532.chunk.js.map",
+    "main.js": "/aepp-boilerplate-react/static/js/main.b11341bf.chunk.js",
+    "main.js.map": "/aepp-boilerplate-react/static/js/main.b11341bf.chunk.js.map",
+    "runtime-main.js": "/aepp-boilerplate-react/static/js/runtime-main.14de60aa.js",
+    "runtime-main.js.map": "/aepp-boilerplate-react/static/js/runtime-main.14de60aa.js.map",
+    "static/js/2.79796636.chunk.js": "/aepp-boilerplate-react/static/js/2.79796636.chunk.js",
+    "static/js/2.79796636.chunk.js.map": "/aepp-boilerplate-react/static/js/2.79796636.chunk.js.map",
+    "static/js/3.fb507f4c.chunk.js": "/aepp-boilerplate-react/static/js/3.fb507f4c.chunk.js",
+    "static/js/3.fb507f4c.chunk.js.map": "/aepp-boilerplate-react/static/js/3.fb507f4c.chunk.js.map",
     "index.html": "/aepp-boilerplate-react/index.html",
     "static/css/main.036025c0.chunk.css.map": "/aepp-boilerplate-react/static/css/main.036025c0.chunk.css.map",
-    "static/js/2.349512e1.chunk.js.LICENSE.txt": "/aepp-boilerplate-react/static/js/2.349512e1.chunk.js.LICENSE.txt",
+    "static/js/2.79796636.chunk.js.LICENSE.txt": "/aepp-boilerplate-react/static/js/2.79796636.chunk.js.LICENSE.txt",
     "static/media/logo.6ce24c58.svg": "/aepp-boilerplate-react/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.4ba6c0cb.js",
-    "static/js/2.349512e1.chunk.js",
+    "static/js/runtime-main.14de60aa.js",
+    "static/js/2.79796636.chunk.js",
     "static/css/main.036025c0.chunk.css",
-    "static/js/main.f0314619.chunk.js"
+    "static/js/main.b11341bf.chunk.js"
   ]
 }

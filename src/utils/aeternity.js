@@ -5,10 +5,9 @@ import {
 import WalletDetector from "@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-detector";
 import BrowserWindowMessageConnection from "@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message";
 
-import store from "../store";
 import nodeConfig from "../configs/node";
 
-let client, address;
+let client;
 
 const scanForWallets = () => {
 	if (!client) throw new Error("Use aeternitySDK first");
@@ -25,11 +24,8 @@ const scanForWallets = () => {
 				await client.connectToWallet(await newWallet.getConnection())
 				await client.subscribeAddress("subscribe", "current")
 
-				let scannedAddress = client.address();
-				if (!scannedAddress) return;
-
 				detector.stopScan()
-				resolve(scannedAddress);
+				resolve(true);
 			}
     });
   });
@@ -63,16 +59,12 @@ export const aeternitySDK = async () => {
 			...node,
 			onNetworkChange: async (params) => {
 				client.selectNode(params.networkId);
-				client.balance(address);
-			},
-      onDisconnect() {
-        store.dispatch('resetState');
-      }
+			}
     });
     
-		address = await scanForWallets();
+		await scanForWallets();
 
-    return { client, address };
+    return client;
   } catch (err) {
     console.error(err);
     return;

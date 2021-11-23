@@ -2,39 +2,27 @@ import {
 	useState,
 	useEffect
 } from 'react';
-import { connect } from "react-redux";
-import {
-	toAe,
-	AE_AMOUNT_FORMATS
-} from '@aeternity/aepp-sdk/es/utils/amount-formatter';
+import { AE_AMOUNT_FORMATS } from '@aeternity/aepp-sdk/es/utils/amount-formatter';
 
 import './App.css';
 import logo from './logo.svg';
-import {
-  addSDK,
-	addAddress,
-  addAddressBalance,
-} from "./actions/actionCreator";
 import { aeternitySDK } from "./utils/aeternity";
 
-const App = ({ dispatch }) => {
+const App = () => {
 	const [client, clientReady] = useState(null);
 
 	useEffect(() => {
     try {
 			(async () => {
-				const sdkResponse = await aeternitySDK();
+				let sdk = await aeternitySDK();
 
-				dispatch(addSDK(sdkResponse.client));
-				dispatch(addAddress(sdkResponse.address));
-				console.log("Current Address:", sdkResponse.address);
+				const address = await sdk.address();
+				const balance = await sdk.balance(address, {
+					format: AE_AMOUNT_FORMATS.AE,
+				});
 
-				sdkResponse.client.balance(sdkResponse.address).then((value) => {
-					let addressBalance = toAe(value) + ' ' + AE_AMOUNT_FORMATS.AE;
-
-					dispatch(addAddressBalance(addressBalance));
-					console.log("Current Balance:", addressBalance);
-				}).catch(() => '0 ' + AE_AMOUNT_FORMATS.AE);
+				console.log("Current Address:", address);
+				console.log("Current Balance:", balance + AE_AMOUNT_FORMATS.AE);
 
 				clientReady(true);		
 			})();
@@ -43,7 +31,7 @@ const App = ({ dispatch }) => {
 
 			clientReady(false)
 		}
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="App">
@@ -69,6 +57,4 @@ const App = ({ dispatch }) => {
   );
 };
 
-const mapStateToProps = (state) => ({ state });
-
-export default connect(mapStateToProps)(App);
+export default App;

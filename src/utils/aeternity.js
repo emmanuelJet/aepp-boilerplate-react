@@ -1,16 +1,16 @@
-import { 
+import {
 	Node,
-	RpcAepp
-} from "@aeternity/aepp-sdk/es";
-import WalletDetector from "@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/wallet-detector";
-import BrowserWindowMessageConnection from "@aeternity/aepp-sdk/es/utils/aepp-wallet-communication/connection/browser-window-message";
+	RpcAepp,
+	WalletDetector,
+	BrowserWindowMessageConnection
+} from "@aeternity/aepp-sdk";
 
 import nodeConfig from "../configs/node";
 
 let client;
 
 const scanForWallets = () => {
-	if (!client) throw new Error("Use aeternitySDK first");
+	if (!client) throw new Error("Execute aeternitySDK first");
   const scannerConnection = BrowserWindowMessageConnection({
     connectionInfo: { id: 'spy' }
   });
@@ -66,7 +66,7 @@ export const aeternitySDK = async () => {
 
     return client;
   } catch (err) {
-    console.error(err);
+    console.error("SDK not loaded correctly", err);
     return;
   }
 };

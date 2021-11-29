@@ -1,3 +1,8 @@
+/**
+ * Testnet & Mainnet nodeConfig
+ * 
+ * @returns {Object} æ node config
+ */
 const nodeConfig = {
 	testnet: {
 		name: "ae_uat",

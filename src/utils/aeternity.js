@@ -9,6 +9,11 @@ import nodeConfig from "../configs/node";
 
 let client;
 
+/**
+ * Scan for user Wallet
+ * 
+ * @returns {bool} Wallet connection status
+ */
 const scanForWallets = () => {
 	if (!client) throw new Error("Execute aeternitySDK first");
   const scannerConnection = BrowserWindowMessageConnection({
@@ -20,18 +25,20 @@ const scanForWallets = () => {
     detector.scan(async ({ newWallet }) => {
       if (!newWallet) return;
 
-			if (window.confirm(`Do you want to connect to wallet ${newWallet.name}`)) {
-				await client.connectToWallet(await newWallet.getConnection())
-				await client.subscribeAddress("subscribe", "current")
+			await client.connectToWallet(await newWallet.getConnection())
+			await client.subscribeAddress("subscribe", "current")
 
-				detector.stopScan()
-				resolve(true);
-			}
+			detector.stopScan()
+			resolve(true);
     });
   });
 };
 
-
+/**
+ * Wallet connection method 
+ * 
+ * @returns {Object} RpcAepp client
+ */
 export const aeternitySDK = async () => {
   try {
     const node = {

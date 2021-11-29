@@ -1,9 +1,23 @@
+import { AmountFormatter } from '@aeternity/aepp-sdk';
+
 import './App.css';
 import logo from './logo.svg';
 import useAeternitySDK from './hooks/useAeternitySDK';
 
 const App = () => {
 	const client = useAeternitySDK();
+
+	const fetchAccount = async (sdk) => {
+		let address = await sdk.address();
+		let balance = await sdk.balance(address, {
+			format: AmountFormatter.AE_AMOUNT_FORMATS.AE
+		});
+
+		console.log("Current Address:", address);
+		console.log("Current Balance:", balance + AmountFormatter.AE_AMOUNT_FORMATS.AE);	
+	}
+
+	if (client) fetchAccount(client);
 
   return (
     <div className="App">

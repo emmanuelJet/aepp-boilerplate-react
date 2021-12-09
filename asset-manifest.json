@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/aepp-boilerplate-react/static/css/main.036025c0.chunk.css",
-    "main.js": "/aepp-boilerplate-react/static/js/main.96330be9.chunk.js",
-    "main.js.map": "/aepp-boilerplate-react/static/js/main.96330be9.chunk.js.map",
-    "runtime-main.js": "/aepp-boilerplate-react/static/js/runtime-main.a6958951.js",
-    "runtime-main.js.map": "/aepp-boilerplate-react/static/js/runtime-main.a6958951.js.map",
-    "static/js/2.9ab58db5.chunk.js": "/aepp-boilerplate-react/static/js/2.9ab58db5.chunk.js",
-    "static/js/2.9ab58db5.chunk.js.map": "/aepp-boilerplate-react/static/js/2.9ab58db5.chunk.js.map",
-    "static/js/3.5da7df88.chunk.js": "/aepp-boilerplate-react/static/js/3.5da7df88.chunk.js",
-    "static/js/3.5da7df88.chunk.js.map": "/aepp-boilerplate-react/static/js/3.5da7df88.chunk.js.map",
+    "main.css": "/aepp-boilerplate-react/static/css/main.efe0b3e6.chunk.css",
+    "main.js": "/aepp-boilerplate-react/static/js/main.6d30938c.chunk.js",
+    "main.js.map": "/aepp-boilerplate-react/static/js/main.6d30938c.chunk.js.map",
+    "runtime-main.js": "/aepp-boilerplate-react/static/js/runtime-main.f3ca987b.js",
+    "runtime-main.js.map": "/aepp-boilerplate-react/static/js/runtime-main.f3ca987b.js.map",
+    "static/js/2.f368f1ec.chunk.js": "/aepp-boilerplate-react/static/js/2.f368f1ec.chunk.js",
+    "static/js/2.f368f1ec.chunk.js.map": "/aepp-boilerplate-react/static/js/2.f368f1ec.chunk.js.map",
+    "static/js/3.10c90308.chunk.js": "/aepp-boilerplate-react/static/js/3.10c90308.chunk.js",
+    "static/js/3.10c90308.chunk.js.map": "/aepp-boilerplate-react/static/js/3.10c90308.chunk.js.map",
     "index.html": "/aepp-boilerplate-react/index.html",
-    "static/css/main.036025c0.chunk.css.map": "/aepp-boilerplate-react/static/css/main.036025c0.chunk.css.map",
-    "static/js/2.9ab58db5.chunk.js.LICENSE.txt": "/aepp-boilerplate-react/static/js/2.9ab58db5.chunk.js.LICENSE.txt",
+    "static/css/main.efe0b3e6.chunk.css.map": "/aepp-boilerplate-react/static/css/main.efe0b3e6.chunk.css.map",
+    "static/js/2.f368f1ec.chunk.js.LICENSE.txt": "/aepp-boilerplate-react/static/js/2.f368f1ec.chunk.js.LICENSE.txt",
     "static/media/logo.6ce24c58.svg": "/aepp-boilerplate-react/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.a6958951.js",
-    "static/js/2.9ab58db5.chunk.js",
-    "static/css/main.036025c0.chunk.css",
-    "static/js/main.96330be9.chunk.js"
+    "static/js/runtime-main.f3ca987b.js",
+    "static/js/2.f368f1ec.chunk.js",
+    "static/css/main.efe0b3e6.chunk.css",
+    "static/js/main.6d30938c.chunk.js"
   ]
 }

@@ -14,7 +14,7 @@
     "aepp-boilerplate-react"
   ],
   "dependencies": {
-    "@aeternity/aepp-sdk": "^9.0.1",
+    "@aeternity/aepp-sdk": "github:aeternity/aepp-sdk-js#feature/react-compatibility",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",

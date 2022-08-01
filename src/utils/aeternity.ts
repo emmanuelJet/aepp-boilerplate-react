@@ -8,20 +8,21 @@ import {
 
 import network from "../configs/network";
 
-let aeSdk;
+let aeSdk: AeSdkAepp;
 
 /**
  * Scan for user Wallet
  * 
  * @returns {Promise} Wallet connection status
  */
-const scanForWallets = () => {
+const scanForWallets = (): Promise<string> => {
 	return new Promise((resolve, reject) => {
 		if (!aeSdk) reject("Failed! SDK not initialized.");
 		const scannerConnection = new BrowserWindowMessageConnection();
-		const handleNewWallet = async ({ wallets, newWallet }) => {
+		const handleNewWallet = async ({ wallets, newWallet }: any) => {
 			newWallet = newWallet || Object.values(wallets)[0]
 			await aeSdk.connectToWallet(await newWallet.getConnection())
+			// @ts-ignore
 			await aeSdk.subscribeAddress(SUBSCRIPTION_TYPES.subscribe, "current")
 			stopScan();
 			resolve(newWallet.info.networkId);
@@ -35,7 +36,10 @@ const scanForWallets = () => {
  * 
  * @returns {Object} AeSdkAepp client
  */
-export const initSDK = async () => {
+export const initSDK= async () : Promise<{
+	walletNetworkId: string, 
+	aeSdk: AeSdkAepp
+}>  => {
     const node = {
       nodes: [
         {
@@ -48,9 +52,10 @@ export const initSDK = async () => {
 
     aeSdk = new AeSdkAepp({
       name: "aepp-boilerplate",
-			...node,
-    });
+		...node,
+    } as any);
     
-		const walletNetworkId = await scanForWallets();
+	const walletNetworkId: string = await scanForWallets();
+
     return { walletNetworkId, aeSdk };
 };

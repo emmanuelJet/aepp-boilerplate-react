@@ -3,7 +3,7 @@
  * 
  * @returns {Object} æ node config
  */
-const networks = {
+const networks: any = {
 	development: {
 		id: "ae_uat",
 		url: "https://testnet.aeternity.io",

@@ -4,54 +4,50 @@ import './App.css';
 import logo from './logo.svg';
 import useAeternitySDK from './hooks/useAeternitySDK';
 import network from "./configs/network";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
+// 
+const WalletConnectionStatus = Object.freeze({
+	Error: 0,
+	Connecting: 1,
+	Connected: 2,
+});
 
 
 const App = () => {
-	const [res, connecting, sdkError] = useAeternitySDK();
+	const [client, clientReady] = useAeternitySDK();
 	const [address, setAddress] = useState(null);
 	const [balance, setBalance] = useState(null);
 	const [errorMsg, setErrorMsg] = useState(null);
+	const [status, setStatus] = useState(WalletConnectionStatus.Connecting)
 	
-	let aeSdk;
+	const aeSdk = useRef(null);
 	
-	const onNetworkChange = function (params) {
-		updateAccountDetails(params.networkId)
-	}
 
-	const updateAccountDetails = async function (walletNetworkId) {
+	const fetchAccountDetails = async function (walletNetworkId) {
 		if (status !== WalletConnectionStatus.Error && walletNetworkId !== network.id) {
 			setErrorMsg(`Connected to the wrong network "${walletNetworkId}". please switch to "${network.id}" in your wallet.`)
-			status = WalletConnectionStatus.Error;
+			setStatus(WalletConnectionStatus.Error);
 		} else if(status !== WalletConnectionStatus.Connected){
-			status = WalletConnectionStatus.Connected;
-			setAddress(await aeSdk.address())
-			setBalance(await aeSdk.getBalance(address, {
+			setStatus(WalletConnectionStatus.Connected);
+
+			const _address = await aeSdk.current.address()
+			setAddress(_address);
+
+			const _balance = await aeSdk.current.getBalance(_address, {
 				format: AE_AMOUNT_FORMATS.AE
-			}));
+			});
+			setBalance(_balance);
 		}
 	}
 
-	useEffect(()=>{
-		if (!connecting && res) {
-			aeSdk = res.aeSdk;
-			aeSdk.onNetworkChange = onNetworkChange;
-			updateAccountDetails(res.walletNetworkId);
+	useEffect(() => {
+		if (clientReady && client) {
+			aeSdk.current = client.current.aeSdk;
+			aeSdk.current.onNetworkChange = (params) => fetchAccountDetails(params.networkId);
+			fetchAccountDetails(client.current.walletNetworkId);
 		}
-	}, [connecting])
-
-	const WalletConnectionStatus = Object.freeze({
-		Error: 0,
-		Connecting: 1,
-		Connected: 2,
-	});
-
-	let status = WalletConnectionStatus.Connecting;
-
-
-
-
+	}, [clientReady, client]);
 
 
 	return (
@@ -72,7 +68,7 @@ const App = () => {
 					{status === WalletConnectionStatus.Connected &&
 						<div>
 							<h6>Account address: {address}</h6>
-							<h6>Balance: {balance}</h6>
+							<h6>Balance: {JSON.stringify(balance)}</h6>
 						</div>
 					}
 				</div>

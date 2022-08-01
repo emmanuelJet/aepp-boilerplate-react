@@ -12,24 +12,28 @@ import { initSDK } from "../utils/aeternity";
  * @returns {Object} æpp client
  */
 const useAeternitySDK = () => {
-	const [client, clientReady] = useState(null);
+	const client = useRef();
+
 	const [connecting, setConnecting] = useState(false);
-	const [sdkError, setSdkError] = useState(null);
+	const [clientReady, setClientReady] = useState(false);
+	const [clientError, setClientError] = useState(null);
 
 	useEffect(() => {
 		(async () => {
-				setSdkError(null);
+				setClientError(null);
 				setConnecting(true);
 				try {
-					const client = await initSDK()
-					clientReady(client);
+					client.current = await initSDK();
+					setClientReady(true);
 				} catch (err) {
-					setSdkError(err);
+					setClientError(err);
+					setClientReady(false);
+				} finally {
+					setConnecting(false);
 				}
-				setConnecting(false);
 		})();
-  }, [client]);
-	return [client, connecting, sdkError];
+  }, []);
+	return [client, clientReady, connecting, clientError];
 }
 
 export default useAeternitySDK;

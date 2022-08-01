@@ -1,79 +1,56 @@
 import {
 	Node,
-	RpcAepp,
-	WalletDetector,
-	BrowserWindowMessageConnection
+	AeSdkAepp,
+	walletDetector,
+	BrowserWindowMessageConnection,
+	SUBSCRIPTION_TYPES
 } from "@aeternity/aepp-sdk";
 
-import nodeConfig from "../configs/node";
+import network from "../configs/network";
 
-let client;
+let aeSdk;
 
 /**
  * Scan for user Wallet
  * 
- * @returns {bool} Wallet connection status
+ * @returns {Promise} Wallet connection status
  */
 const scanForWallets = () => {
-	if (!client) throw new Error("Execute aeternitySDK first");
-  const scannerConnection = BrowserWindowMessageConnection({
-    connectionInfo: { id: 'spy' }
-  });
-  const detector = WalletDetector({ connection: scannerConnection });
-
-	return new Promise((resolve) => {
-    detector.scan(async ({ newWallet }) => {
-      if (!newWallet) return;
-
-			await client.connectToWallet(await newWallet.getConnection())
-			await client.subscribeAddress("subscribe", "current")
-
-			detector.stopScan()
-			resolve(true);
-    });
-  });
+	return new Promise((resolve, reject) => {
+		if (!aeSdk) reject("Failed! SDK not initialized.");
+		const scannerConnection = new BrowserWindowMessageConnection();
+		const handleNewWallet = async ({ wallets, newWallet }) => {
+			newWallet = newWallet || Object.values(wallets)[0]
+			await aeSdk.connectToWallet(await newWallet.getConnection())
+			await aeSdk.subscribeAddress(SUBSCRIPTION_TYPES.subscribe, "current")
+			stopScan();
+			resolve(newWallet.info.networkId);
+		};
+		const stopScan = walletDetector(scannerConnection, handleNewWallet.bind(this));
+	})
 };
 
 /**
  * Wallet connection method 
  * 
- * @returns {Object} RpcAepp client
+ * @returns {Object} AeSdkAepp client
  */
-export const aeternitySDK = async () => {
-  try {
+export const initSDK = async () => {
     const node = {
       nodes: [
         {
-          name: nodeConfig.testnet.name,
-          instance: await Node({
-            url: nodeConfig.testnet.url,
-            internalUrl: nodeConfig.testnet.middlewareUrl,
-          }),
+          name: network.id,
+          instance: new Node(network.url),
         },
-				{
-          name: nodeConfig.mainnet.name,
-          instance: await Node({
-            url: nodeConfig.mainnet.url,
-            internalUrl: nodeConfig.mainnet.middlewareUrl,
-          }),
-        }
       ],
-      compilerUrl: nodeConfig.compilerUrl,
+      compilerUrl: network.compilerUrl,
     };
 
-    client = await RpcAepp({
+    aeSdk = new AeSdkAepp({
       name: "aepp-boilerplate",
 			...node,
-			onNetworkChange: async (params) => {
-				client.selectNode(params.networkId);
-			}
     });
     
-		await scanForWallets();
-
-    return client;
-  } catch (err) {
-    console.error("SDK not loaded correctly", err);
-    return;
-  }
+		const walletNetworkId = await scanForWallets();
+    return { walletNetworkId, aeSdk };
 };

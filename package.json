@@ -14,17 +14,19 @@
     "aepp-boilerplate-react"
   ],
   "dependencies": {
-    "@aeternity/aepp-sdk": "^9.0.1",
+    "@aeternity/aepp-sdk": "^12.1.1",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
+    "react": "^18.0.2",
+    "react-dom": "^18.0.2",
+    "react-scripts": "5.0.1",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:testnet": "REACT_APP_NODE_ENV=development react-scripts start",
+    "start:mainnet": "REACT_APP_NODE_ENV=production react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
